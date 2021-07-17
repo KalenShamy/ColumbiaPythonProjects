@@ -22,18 +22,18 @@ import time
 def clearShell():
     print("\n"*998)
     print("""\n
-                                  ,'\ 
-    _.----.        ____         ,'  _\   ___    ___     ____
-_,-'       `.     |    |  /`.   \,-'    |   \  /   |   |    \  |`.
-\      __    \    '-.  | /   `.  ___    |    \/    |   '-.   \ |  |
- \.    \ \   |  __  |  |/    ,','_  `.  |          | __  |    \|  |
-   \    \/   /,' _`.|      ,' / / / /   |          ,' _`.|     |  |
-    \     ,-'/  / \ \    ,'   | \/ / ,`.|         /  / \ \  |     |
-     \    \ |   \_/  |   `-.  \    `'  /|  |    ||   \_/  | |\    |
-      \    \ \      /       `-.`.___,-' |  |\  /| \      /  | |   |
-       \    \ `.__,'|  |`-._   `|       |  | \/ |  `.__,'|  | |   |
-        \_.-'       |__|    `-. |       |.-'    '-.|     '-.| |   |
-                               `'                             '-._|
+                                 ,'\ 
+   _.----.        ____         ,'  _\   ___    ___     ____
+,-'       `.     |    |  /`.   \,-'    |   \  /   |   |    \  |`.
+\     __    \    '-.  | /   `.  ___    |    \/    |   '-.   \ |  |
+ \    \ \   |  __  |  |/    ,','_  `.  |          | __  |    \|  |
+  \    \/   /,' _`.|      ,' / / / /   |          ,' _`.|     |  |
+   \     ,-'/  / \ \    ,'   | \/ / ,`.|         /  / \ \  |     |
+    \    \ |   \_/  |   `-.  \    `'  /|  |    ||   \_/  | |\    |
+     \    \ \      /       `-.`.___,-' |  |\  /| \      /  | |   |
+      \    \ `.__,'|  |`-._   `|       |  | \/ |  `.__,'|  | |   |
+       \_.-'       |__|    `-. |       |.-'    '-.|     '-.| |   |
+                              `'                             '-._|
 """)
 
 def uinput(string):
@@ -127,7 +127,7 @@ def pokemonStats(player):
     deck = playersPokemon[player]
     deckStr = ""
     for pokemon in deck:
-        deckStr += f"\t{pokemon.Name}:\n\t\tHP: {pokemon.HP}/{pokemon.MAXHP} ({int((pokemon.HP/pokemon.MAXHP)*100)}%)\n\t\tAttack: {pokemon.ATK}\n\t\tDefense: {pokemon.DEF}\n\t\tAccuracy: {int(100*pokemon.ACC)}%\n\n"
+        deckStr += f"\t{pokemon.Name}:\n\t\tType: {pokemon.Type} {emojis[pokemon.Type]}\n\t\tHP: {pokemon.HP}/{pokemon.MAXHP} ({int((pokemon.HP/pokemon.MAXHP)*100)}%)\n\t\tAttack: {pokemon.ATK}\n\t\tDefense: {pokemon.DEF}\n\t\tAccuracy: {int(100*pokemon.ACC)}%\n\n"
     return deckStr
 
 def progressBar(percent):
@@ -143,7 +143,10 @@ def printPokeHealth(player):
         opponentNum = 2
     plrPokemon = playersActivePokemon[player-1]
     opponentPokemon = playersActivePokemon[player-2]
-    tabs = "\t"*(4-int(len(f"|| P{plrNum}: {emojis[plrPokemon.Type]} {plrPokemon.Name} ({int((plrPokemon.HP/plrPokemon.MAXHP)*100)}%)")/8))
+    emojiAccount = " "*2
+    if plrPokemon.Type == "Electric" or plrPokemon.Type == "Psychic":
+        emojiAccount = " "*1
+    tabs = "\t"*(4-int(len(f"|| P{plrNum}: {emojiAccount} {plrPokemon.Name} ({int((plrPokemon.HP/plrPokemon.MAXHP)*100)}%)")/8))
     print(f"|| P{plrNum}: {emojis[plrPokemon.Type]} {plrPokemon.Name} ({int((plrPokemon.HP/plrPokemon.MAXHP)*100)}%){tabs}P{opponentNum}: {emojis[opponentPokemon.Type]} {opponentPokemon.Name} ({int((opponentPokemon.HP/opponentPokemon.MAXHP)*100)}%)\n|| {progressBar(plrPokemon.HP/plrPokemon.MAXHP)} - {plrPokemon.HP} HP\t\t{progressBar(opponentPokemon.HP/opponentPokemon.MAXHP)} - {opponentPokemon.HP} HP\n")
 
 def checkWin(opponent, opponentNum):
